@@ -7,24 +7,19 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import java.net.URI;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
-
 @EnableScheduling
 @SpringBootApplication
 public class BackendApplication {
 
 	public static void main(String[] args) {
-		SpringApplication application = new SpringApplication(BackendApplication.class);
-		application.setDefaultProperties(renderDatabaseProperties());
-		application.run(args);
+		applyRenderDatabaseProperties();
+		SpringApplication.run(BackendApplication.class, args);
 	}
 
-	private static Map<String, Object> renderDatabaseProperties() {
-		Map<String, Object> properties = new HashMap<>();
+	private static void applyRenderDatabaseProperties() {
 		String databaseUrl = System.getenv("DATABASE_URL");
 		if (databaseUrl == null || !databaseUrl.startsWith("postgresql://")) {
-			return properties;
+			return;
 		}
 
 		URI uri = URI.create(databaseUrl);
@@ -33,10 +28,9 @@ public class BackendApplication {
 		if (uri.getQuery() != null && !uri.getQuery().isBlank()) {
 			jdbcUrl += "?" + uri.getQuery();
 		}
-		properties.put("spring.datasource.url", jdbcUrl);
-		properties.put("spring.datasource.username", decode(userInfo[0]));
-		properties.put("spring.datasource.password", userInfo.length > 1 ? decode(userInfo[1]) : "");
-		return properties;
+		System.setProperty("spring.datasource.url", jdbcUrl);
+		System.setProperty("spring.datasource.username", decode(userInfo[0]));
+		System.setProperty("spring.datasource.password", userInfo.length > 1 ? decode(userInfo[1]) : "");
 	}
 
 	private static String decode(String value) {
