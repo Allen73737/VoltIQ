@@ -1,0 +1,38 @@
+import { motion } from 'framer-motion'
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { Bolt } from 'lucide-react'
+import { useAuth } from '../context/AuthContext.jsx'
+
+export default function Login() {
+  const [email, setEmail] = useState('admin@voltiq.io')
+  const [password, setPassword] = useState('password123')
+  const [loading, setLoading] = useState(false)
+  const { login } = useAuth()
+  const navigate = useNavigate()
+
+  const submit = async (event) => {
+    event.preventDefault()
+    setLoading(true)
+    await login(email, password)
+    navigate('/app')
+  }
+
+  return (
+    <main className="grid min-h-screen place-items-center bg-[#02040a] px-5 text-white">
+      <form onSubmit={submit} className="glass w-full max-w-md rounded-[32px] p-8">
+        <motion.div initial={{ scale: 0.92, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="mx-auto grid size-14 place-items-center rounded-2xl bg-sky-300 text-slate-950">
+          <Bolt fill="currentColor" />
+        </motion.div>
+        <h1 className="mt-7 text-center text-3xl font-semibold">Welcome back</h1>
+        <p className="mt-2 text-center text-slate-400">Enter the VoltIQ command center.</p>
+        <label className="mt-8 block text-sm text-slate-300">Email</label>
+        <input className="mt-2 w-full rounded-2xl border border-white/10 bg-white/[0.08] px-4 py-3 outline-none focus:border-sky-300" value={email} onChange={(e) => setEmail(e.target.value)} />
+        <label className="mt-4 block text-sm text-slate-300">Password</label>
+        <input className="mt-2 w-full rounded-2xl border border-white/10 bg-white/[0.08] px-4 py-3 outline-none focus:border-sky-300" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+        <button className="mt-7 w-full rounded-2xl bg-sky-300 py-3 font-semibold text-slate-950 hover:bg-sky-200" disabled={loading}>{loading ? 'Launching...' : 'Login'}</button>
+        <p className="mt-5 text-center text-sm text-slate-400">New to VoltIQ? <Link className="text-sky-200" to="/register">Create workspace</Link></p>
+      </form>
+    </main>
+  )
+}

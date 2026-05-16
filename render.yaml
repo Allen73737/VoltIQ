@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: voltiq-backend
+    runtime: docker
+    rootDir: backend
+    dockerfilePath: ./Dockerfile
+    plan: free
+    healthCheckPath: /actuator/health
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: voltiq-postgres
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRATION_MS
+        value: 86400000
+      - key: ENERGY_TARIFF_PER_KWH
+        value: 9.35
+      - key: CORS_ALLOWED_ORIGINS
+        sync: false
+
+databases:
+  - name: voltiq-postgres
+    databaseName: voltiq
+    user: voltiq
+    plan: basic-256mb
