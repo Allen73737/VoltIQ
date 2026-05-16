@@ -35,6 +35,20 @@ function Particles() {
   ))
 }
 
+function Reveal({ children, className = '', delay = 0 }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 42, scale: 0.985, filter: 'blur(14px)' }}
+      whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+      viewport={{ once: true, margin: '-90px' }}
+      transition={{ duration: 0.82, delay, ease: [0.16, 1, 0.3, 1] }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  )
+}
+
 function HeroPreview() {
   return (
     <motion.div variants={fade} custom={4} className="relative">
@@ -112,6 +126,7 @@ export default function Landing() {
       <section className="relative min-h-screen px-5 pb-24 pt-36">
         <div className="pointer-events-none absolute inset-0 grid-glow" />
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_52%_22%,rgba(125,211,252,.18),transparent_26rem),linear-gradient(115deg,transparent_0%,rgba(14,165,233,.12)_36%,transparent_62%),linear-gradient(28deg,rgba(45,212,191,.08),transparent_42%)]" />
+        <div className="energy-ribbons"><span /><span /><span /><span /></div>
         <div className="pointer-events-none absolute inset-0">
           <Particles />
         </div>
@@ -163,20 +178,20 @@ export default function Landing() {
       </section>
 
       <section id="features" className="mx-auto max-w-7xl px-5 py-24">
-        <div className="mb-10 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+        <Reveal className="mb-10 flex flex-col justify-between gap-4 md:flex-row md:items-end">
           <div>
             <p className="text-sm uppercase tracking-[0.35em] text-sky-200/70">Platform modules</p>
             <h2 className="mt-3 text-4xl font-semibold tracking-tight md:text-5xl">Built like a real SaaS product.</h2>
           </div>
           <p className="max-w-md text-slate-400">New workspaces start clean. The demo campus shows sample analytics instantly; production accounts build insight from recorded appliance sessions.</p>
-        </div>
+        </Reveal>
         <div className="grid gap-4 md:grid-cols-3">
         {[
           [Cpu, 'Session intelligence', 'Start/stop appliance tracking with automatic duration and unit calculation.'],
           [Bell, 'Anomaly alerts', 'Peak demand, idle loads, and unusual draw surfaced before bills spike.'],
           [ShieldCheck, 'Enterprise-ready', 'JWT auth, roles, clean APIs, PostgreSQL schema, and Dockerized delivery.'],
         ].map(([Icon, title, copy], i) => (
-          <motion.article key={title} variants={fade} initial="hidden" whileInView="show" custom={i} viewport={{ once: true }} whileHover={{ y: -8 }} className="glass rounded-[28px] p-6">
+          <motion.article key={title} variants={fade} initial="hidden" whileInView="show" custom={i} viewport={{ once: true }} whileHover={{ y: -12, rotateX: 3, rotateY: -3 }} className="premium-card glass rounded-[28px] p-6">
             <Icon className="text-sky-300" size={30} />
             <h2 className="mt-8 text-2xl font-semibold">{title}</h2>
             <p className="mt-3 leading-7 text-slate-400">{copy}</p>
@@ -185,8 +200,9 @@ export default function Landing() {
         </div>
       </section>
 
-      <section id="analytics" className="border-y border-white/10 bg-white/[0.03] px-5 py-24">
-        <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[.85fr_1.15fr]">
+      <section id="analytics" className="relative overflow-hidden border-y border-white/10 bg-white/[0.03] px-5 py-24">
+        <div className="energy-ribbons opacity-60"><span /><span /><span /><span /></div>
+        <Reveal className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[.85fr_1.15fr]">
           <div>
             <p className="text-sm uppercase tracking-[0.35em] text-sky-200/70">Operations cockpit</p>
             <h2 className="mt-3 text-4xl font-semibold tracking-tight md:text-5xl">From raw kWh to confident action.</h2>
@@ -199,14 +215,14 @@ export default function Landing() {
               [Zap, 'Live appliance control', 'Session-based on/off tracking with backend unit calculation.'],
               [Building2, 'Multi-space ready', 'Designed for hostels, apartments, offices, and smart homes.'],
             ].map(([Icon, title, copy]) => (
-              <div key={title} className="rounded-[26px] border border-white/10 bg-slate-950/40 p-6">
+              <motion.div key={title} whileHover={{ y: -8, scale: 1.02 }} className="premium-card rounded-[26px] border border-white/10 bg-slate-950/40 p-6">
                 <Icon className="text-sky-300" />
                 <h3 className="mt-5 text-xl font-semibold">{title}</h3>
                 <p className="mt-2 leading-7 text-slate-400">{copy}</p>
-              </div>
+              </motion.div>
             ))}
           </div>
-        </div>
+        </Reveal>
       </section>
 
       <section className="mx-auto grid max-w-7xl gap-6 px-5 py-24 md:grid-cols-4">
@@ -216,7 +232,7 @@ export default function Landing() {
           ['99.9%', 'API availability target'],
           ['12 min', 'to deploy with Docker'],
         ].map(([value, label]) => (
-          <motion.div key={label} whileHover={{ y: -6 }} className="rounded-[26px] border border-white/10 bg-white/[0.04] p-6">
+          <motion.div key={label} initial={{ opacity: 0, y: 32 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} whileHover={{ y: -8, scale: 1.025 }} className="premium-card rounded-[26px] border border-white/10 bg-white/[0.04] p-6">
             <p className="text-4xl font-semibold text-sky-200">{value}</p>
             <p className="mt-2 text-slate-400">{label}</p>
           </motion.div>
@@ -224,7 +240,7 @@ export default function Landing() {
       </section>
 
       <section id="trust" className="mx-auto max-w-7xl px-5 py-24">
-        <div className="mb-10 rounded-[34px] border border-white/10 bg-[linear-gradient(135deg,rgba(56,189,248,.14),rgba(255,255,255,.04),rgba(45,212,191,.1))] p-6 shadow-[0_26px_90px_rgba(0,0,0,.28)]">
+        <Reveal className="mb-10 rounded-[34px] border border-white/10 bg-[linear-gradient(135deg,rgba(56,189,248,.14),rgba(255,255,255,.04),rgba(45,212,191,.1))] p-6 shadow-[0_26px_90px_rgba(0,0,0,.28)]">
           <div className="grid gap-5 md:grid-cols-3">
             {['Board-ready reporting', 'Tenant-safe access', 'Appliance-level clarity'].map((item) => (
               <div key={item} className="rounded-[24px] border border-white/10 bg-slate-950/45 p-5">
@@ -233,7 +249,7 @@ export default function Landing() {
               </div>
             ))}
           </div>
-        </div>
+        </Reveal>
         <div className="grid gap-5 md:grid-cols-2">
           {['The first dashboard our facilities team checks every morning.', 'VoltIQ made appliance-level accountability feel effortless.'].map((quote, i) => (
             <motion.blockquote key={quote} initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="glass rounded-[28px] p-8">

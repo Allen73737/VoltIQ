@@ -106,6 +106,61 @@ button:disabled {
   mask-image: radial-gradient(circle, black, transparent 74%);
 }
 
+.energy-ribbons {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.energy-ribbons span {
+  position: absolute;
+  left: -22%;
+  width: 44%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(125, 211, 252, 0.8), transparent);
+  box-shadow: 0 0 28px rgba(56, 189, 248, 0.5);
+  animation: ribbon-flight 9s linear infinite;
+  opacity: 0.55;
+}
+
+.energy-ribbons span:nth-child(1) { top: 18%; animation-delay: 0s; }
+.energy-ribbons span:nth-child(2) { top: 38%; animation-delay: -3s; animation-duration: 12s; }
+.energy-ribbons span:nth-child(3) { top: 62%; animation-delay: -6s; animation-duration: 10s; }
+.energy-ribbons span:nth-child(4) { top: 78%; animation-delay: -1.6s; animation-duration: 14s; }
+
+@keyframes ribbon-flight {
+  0% { transform: translateX(0) rotate(-8deg); opacity: 0; }
+  12% { opacity: 0.58; }
+  82% { opacity: 0.58; }
+  100% { transform: translateX(320%) rotate(-8deg); opacity: 0; }
+}
+
+.premium-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.premium-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at var(--mx, 50%) var(--my, 0%), rgba(125, 211, 252, 0.18), transparent 14rem);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.premium-card:hover::before {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .energy-ribbons span,
+  .luxury-sheen::after {
+    animation: none;
+  }
+}
+
 :root[data-theme="light"] .bg-\[\#02040a\] {
   background-color: #f7fbff;
 }

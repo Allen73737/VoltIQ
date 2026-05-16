@@ -13,6 +13,7 @@ import DemoRedirect from './pages/DemoRedirect.jsx'
 import AppShell from './components/AppShell.jsx'
 import BootLoader from './components/BootLoader.jsx'
 import QuickNav from './components/QuickNav.jsx'
+import ScrollProgress from './components/ScrollProgress.jsx'
 
 const Protected = ({ children }) => {
   const { token } = useAuth()
@@ -29,9 +30,22 @@ export default function App() {
     return () => window.clearTimeout(timer)
   }, [])
 
+  useEffect(() => {
+    const move = (event) => {
+      document.querySelectorAll('.premium-card').forEach((card) => {
+        const rect = card.getBoundingClientRect()
+        card.style.setProperty('--mx', `${event.clientX - rect.left}px`)
+        card.style.setProperty('--my', `${event.clientY - rect.top}px`)
+      })
+    }
+    window.addEventListener('pointermove', move)
+    return () => window.removeEventListener('pointermove', move)
+  }, [])
+
   return (
     <>
       <BootLoader done={!booting} />
+      <ScrollProgress />
       {showQuickNav && <QuickNav />}
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
