@@ -1,8 +1,9 @@
 import { motion } from 'framer-motion'
 import { Outlet, NavLink, useNavigate } from 'react-router-dom'
-import { BarChart3, Bolt, FileText, Home, LogOut, Menu, PlugZap, Settings, SunMoon } from 'lucide-react'
+import { Bolt, FileText, Home, LogOut, Menu, PlugZap, Settings, SunMoon } from 'lucide-react'
 import { useState } from 'react'
 import { useAuth } from '../context/AuthContext.jsx'
+import { useTheme } from '../context/ThemeContext.jsx'
 
 const nav = [
   { to: '/app', label: 'Command', icon: Home, end: true },
@@ -14,6 +15,7 @@ const nav = [
 export default function AppShell() {
   const [collapsed, setCollapsed] = useState(false)
   const { user, isDemo, logout } = useAuth()
+  const { theme, toggleTheme } = useTheme()
   const navigate = useNavigate()
 
   const signOut = () => {
@@ -22,7 +24,7 @@ export default function AppShell() {
   }
 
   return (
-    <div className="min-h-screen overflow-hidden bg-[#02040a] text-slate-100">
+    <div className="min-h-screen overflow-hidden bg-[#02040a] text-slate-100 transition-colors">
       <div className="pointer-events-none fixed inset-0 grid-glow opacity-60" />
       <motion.aside
         animate={{ width: collapsed ? 88 : 284 }}
@@ -87,8 +89,16 @@ export default function AppShell() {
       <header className="sticky top-0 z-20 border-b border-white/10 bg-[#02040a]/80 px-4 py-3 backdrop-blur md:hidden">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 font-semibold"><Bolt className="text-sky-300" /> VoltIQ</div>
-          <button className="rounded-xl bg-white/10 p-2"><SunMoon size={18} /></button>
+          <button onClick={toggleTheme} className="rounded-xl bg-white/10 p-2" aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}><SunMoon size={18} /></button>
         </div>
+        <nav className="mt-3 grid grid-cols-4 gap-2 text-xs">
+          {nav.map(({ to, label, icon: Icon, end }) => (
+            <NavLink key={to} to={to} end={end} className={({ isActive }) => `flex flex-col items-center gap-1 rounded-2xl px-2 py-2 ${isActive ? 'bg-sky-300 text-slate-950' : 'bg-white/10 text-slate-300'}`}>
+              <Icon size={16} />
+              <span>{label}</span>
+            </NavLink>
+          ))}
+        </nav>
       </header>
 
       <section className={`relative z-10 min-h-screen p-4 transition-all md:p-6 ${collapsed ? 'md:pl-32' : 'md:pl-[19rem]'}`}>

@@ -128,7 +128,7 @@ export default function Landing() {
                 Track appliance sessions, calculate real kWh, forecast bills, and turn building energy operations into a measurable workflow.
               </motion.p>
               <motion.div variants={fade} custom={4} className="mt-9 flex flex-wrap gap-4">
-                <button type="button" onClick={goRegister} className="group flex cursor-pointer items-center gap-2 rounded-full bg-sky-300 px-6 py-3 font-semibold text-slate-950 shadow-[0_0_48px_rgba(56,189,248,.42)] transition hover:-translate-y-0.5 hover:bg-cyan-200">
+                <button type="button" onClick={goRegister} className="luxury-sheen group flex cursor-pointer items-center gap-2 rounded-full bg-sky-300 px-6 py-3 font-semibold text-slate-950 shadow-[0_0_48px_rgba(56,189,248,.42)] transition hover:-translate-y-0.5 hover:bg-cyan-200">
                   Create real workspace <ArrowRight size={18} className="transition group-hover:translate-x-1" />
                 </button>
                 <button type="button" onClick={goDemo} className="flex cursor-pointer items-center gap-2 rounded-full border border-white/15 px-6 py-3 font-medium text-slate-200 transition hover:-translate-y-0.5 hover:bg-white/10">

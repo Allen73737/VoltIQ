@@ -1,6 +1,7 @@
 import { Download, FileText, LockKeyhole } from 'lucide-react'
 import PageTransition from '../components/PageTransition.jsx'
 import { useAuth } from '../context/AuthContext.jsx'
+import { downloadReport } from '../services/api.js'
 
 const demoReports = [
   ['Weekly optimization report', 'Peak-hour load movement, appliance-level savings, and operating recommendations.'],
@@ -10,6 +11,22 @@ const demoReports = [
 
 export default function Reports() {
   const { isDemo } = useAuth()
+
+  const exportDemo = (title) => {
+    const csv = `report,scope,status\n"${title}","VoltIQ Demo Campus","Preview export"\n`
+    const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }))
+    const link = document.createElement('a')
+    link.href = url
+    link.download = `${title.toLowerCase().replaceAll(' ', '-')}.csv`
+    document.body.appendChild(link)
+    link.click()
+    link.remove()
+    URL.revokeObjectURL(url)
+  }
+
+  const exportReal = () => {
+    downloadReport('csv').catch(() => window.alert('No report is available yet. Record usage sessions first.'))
+  }
 
   return (
     <PageTransition className="space-y-6">
@@ -25,7 +42,7 @@ export default function Reports() {
               <FileText className="text-sky-300" />
               <h2 className="mt-8 text-2xl font-semibold">{title}</h2>
               <p className="mt-3 leading-7 text-slate-400">{copy}</p>
-              <button className="mt-7 flex items-center gap-2 rounded-2xl bg-white/10 px-4 py-3 text-sm hover:bg-white/15"><Download size={17} /> Preview export</button>
+              <button type="button" onClick={() => exportDemo(title)} className="mt-7 flex items-center gap-2 rounded-2xl bg-white/10 px-4 py-3 text-sm hover:bg-white/15"><Download size={17} /> Preview export</button>
             </article>
           ))}
         </section>
@@ -49,6 +66,7 @@ export default function Reports() {
               ))}
             </div>
           </div>
+          <button type="button" onClick={exportReal} className="mt-7 inline-flex items-center gap-2 rounded-2xl bg-sky-300 px-5 py-3 font-semibold text-slate-950"><Download size={17} /> Download CSV</button>
         </section>
       )}
     </PageTransition>
