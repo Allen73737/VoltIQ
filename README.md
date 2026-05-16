@@ -18,9 +18,10 @@ Open `http://localhost:5173`.
 
 ## Deploy
 
-Deployment files are included for Render + Vercel:
+Deployment files are included for Render + Neon + Vercel:
 
-- `render.yaml` creates the Render backend service and PostgreSQL database.
+- `render.yaml` creates the Render backend service.
+- Neon supplies the PostgreSQL `DATABASE_URL`.
 - `frontend/vercel.json` supports Vercel SPA routing.
 - `frontend/.env.example` and `backend/.env.example` document required env vars.
 
