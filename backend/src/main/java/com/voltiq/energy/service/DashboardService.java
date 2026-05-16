@@ -21,23 +21,35 @@ public class DashboardService {
         var user = currentUserService.get();
         BigDecimal units = usageLogRepository.totalUnitsForUser(user.getId()).setScale(2, RoundingMode.HALF_UP);
         BigDecimal bill = units.multiply(tariff).setScale(2, RoundingMode.HALF_UP);
+        boolean hasUsage = units.compareTo(BigDecimal.ZERO) > 0;
+
         return new DashboardResponse(
                 List.of(
-                        new Metric("Total consumption", units + " kWh", "-12.4%"),
-                        new Metric("Predicted bill", "₹" + bill, "-8.1%"),
-                        new Metric("Efficiency score", "91/100", "+6.3%"),
-                        new Metric("Peak window", "6-9 PM", "3 alerts")
+                        new Metric("Total consumption", units + " kWh", hasUsage ? "recorded" : "no sessions"),
+                        new Metric("Predicted bill", "Rs " + bill, hasUsage ? "current tariff" : "waiting for usage"),
+                        new Metric("Efficiency score", hasUsage ? "Baseline ready" : "Pending", hasUsage ? "needs 7 days" : "add sessions"),
+                        new Metric("Peak window", hasUsage ? "Learning" : "Pending", hasUsage ? "collecting pattern" : "no alerts")
                 ),
                 List.of(
-                        new ChartPoint("00:00", BigDecimal.valueOf(0.9), BigDecimal.valueOf(0.8)),
-                        new ChartPoint("06:00", BigDecimal.valueOf(1.8), BigDecimal.valueOf(1.5)),
-                        new ChartPoint("12:00", BigDecimal.valueOf(2.8), BigDecimal.valueOf(3.0)),
-                        new ChartPoint("18:00", BigDecimal.valueOf(6.8), BigDecimal.valueOf(6.1))
+                        new ChartPoint("00:00", usageSlice(units, hasUsage, 0.12), BigDecimal.ZERO),
+                        new ChartPoint("06:00", usageSlice(units, hasUsage, 0.18), BigDecimal.ZERO),
+                        new ChartPoint("12:00", usageSlice(units, hasUsage, 0.27), BigDecimal.ZERO),
+                        new ChartPoint("18:00", usageSlice(units, hasUsage, 0.43), BigDecimal.ZERO)
                 ),
-                List.of(
-                        new Recommendation("Shiftable load", "Move laundry cycles after 10 PM for lower peak exposure.", "9.6% bill reduction"),
-                        new Recommendation("HVAC maintenance", "Compressor draw is above baseline; inspect filters.", "14% efficiency recovery")
+                hasUsage ? List.of(
+                        new Recommendation("Build baseline", "Keep tracking sessions for seven days to calculate peak windows and efficiency.", "improves forecast quality"),
+                        new Recommendation("Review appliance mix", "Compare high-rating appliances against total recorded units.", "finds priority loads")
+                ) : List.of(
+                        new Recommendation("Start tracking", "Add an appliance and complete a usage session to build a real baseline.", "required for analytics"),
+                        new Recommendation("Use demo mode", "Open the demo campus to preview how a populated workspace behaves.", "sample data only")
                 )
         );
+    }
+
+    private BigDecimal usageSlice(BigDecimal units, boolean hasUsage, double ratio) {
+        if (!hasUsage) {
+            return BigDecimal.ZERO;
+        }
+        return units.multiply(BigDecimal.valueOf(ratio)).setScale(2, RoundingMode.HALF_UP);
     }
 }

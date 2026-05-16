@@ -5,17 +5,25 @@ import { Bolt } from 'lucide-react'
 import { useAuth } from '../context/AuthContext.jsx'
 
 export default function Login() {
-  const [email, setEmail] = useState('admin@voltiq.io')
-  const [password, setPassword] = useState('password123')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
   const { login } = useAuth()
   const navigate = useNavigate()
 
   const submit = async (event) => {
     event.preventDefault()
     setLoading(true)
-    await login(email, password)
-    navigate('/app')
+    setError('')
+    try {
+      await login(email, password)
+      navigate('/app')
+    } catch {
+      setError('Unable to sign in. Check your email, password, and backend connection.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -25,13 +33,15 @@ export default function Login() {
           <Bolt fill="currentColor" />
         </motion.div>
         <h1 className="mt-7 text-center text-3xl font-semibold">Welcome back</h1>
-        <p className="mt-2 text-center text-slate-400">Enter the VoltIQ command center.</p>
+        <p className="mt-2 text-center text-slate-400">Enter your real energy workspace.</p>
         <label className="mt-8 block text-sm text-slate-300">Email</label>
         <input className="mt-2 w-full rounded-2xl border border-white/10 bg-white/[0.08] px-4 py-3 outline-none focus:border-sky-300" value={email} onChange={(e) => setEmail(e.target.value)} />
         <label className="mt-4 block text-sm text-slate-300">Password</label>
         <input className="mt-2 w-full rounded-2xl border border-white/10 bg-white/[0.08] px-4 py-3 outline-none focus:border-sky-300" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+        {error && <p className="mt-4 rounded-2xl border border-rose-300/20 bg-rose-400/10 p-3 text-sm text-rose-100">{error}</p>}
         <button className="mt-7 w-full rounded-2xl bg-sky-300 py-3 font-semibold text-slate-950 hover:bg-sky-200" disabled={loading}>{loading ? 'Launching...' : 'Login'}</button>
         <p className="mt-5 text-center text-sm text-slate-400">New to VoltIQ? <Link className="text-sky-200" to="/register">Create workspace</Link></p>
+        <p className="mt-3 text-center text-sm text-slate-500">Want the sample campus? <Link className="text-sky-200" to="/demo">View demo</Link></p>
       </form>
     </main>
   )

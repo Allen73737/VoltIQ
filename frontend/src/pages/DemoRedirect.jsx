@@ -5,18 +5,20 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext.jsx'
 
 export default function DemoRedirect() {
-  const { login } = useAuth()
+  const { login, startDemo } = useAuth()
   const navigate = useNavigate()
 
   useEffect(() => {
     let mounted = true
-    login('admin@voltiq.io', 'password123').then(() => {
-      if (mounted) navigate('/app', { replace: true })
-    })
+    login('admin@voltiq.io', 'password123', { demo: true })
+      .catch(startDemo)
+      .finally(() => {
+        if (mounted) navigate('/app', { replace: true })
+      })
     return () => {
       mounted = false
     }
-  }, [login, navigate])
+  }, [login, navigate, startDemo])
 
   return (
     <main className="grid min-h-screen place-items-center bg-[#02040a] px-5 text-white">

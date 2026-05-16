@@ -13,7 +13,7 @@ const nav = [
 
 export default function AppShell() {
   const [collapsed, setCollapsed] = useState(false)
-  const { user, logout } = useAuth()
+  const { user, isDemo, logout } = useAuth()
   const navigate = useNavigate()
 
   const signOut = () => {
@@ -35,7 +35,7 @@ export default function AppShell() {
           {!collapsed && (
             <div>
               <p className="text-lg font-semibold tracking-tight">VoltIQ</p>
-              <p className="text-xs text-slate-400">Energy intelligence</p>
+              <p className="text-xs text-slate-400">{isDemo ? 'Demo campus' : 'Energy intelligence'}</p>
             </div>
           )}
           <button className="ml-auto rounded-xl p-2 text-slate-400 hover:bg-white/10 hover:text-white" onClick={() => setCollapsed(!collapsed)}>
@@ -74,6 +74,7 @@ export default function AppShell() {
                 </div>
               )}
             </div>
+            {!collapsed && isDemo && <p className="mt-4 rounded-2xl border border-amber-300/20 bg-amber-400/10 px-3 py-2 text-xs text-amber-100">Demo data is for product preview only.</p>}
             {!collapsed && (
               <button onClick={signOut} className="mt-4 flex w-full items-center justify-center gap-2 rounded-2xl bg-white/[0.08] py-2 text-sm text-slate-300 hover:bg-white/12">
                 <LogOut size={16} /> Sign out

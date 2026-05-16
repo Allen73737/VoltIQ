@@ -8,10 +8,10 @@ const tooltipStyle = {
   color: '#e0f2fe',
 }
 
-export function UsageAreaChart() {
+export function UsageAreaChart({ data = hourlyUsage }) {
   return (
     <ResponsiveContainer width="100%" height={300}>
-      <AreaChart data={hourlyUsage}>
+      <AreaChart data={data}>
         <defs>
           <linearGradient id="usage" x1="0" x2="0" y1="0" y2="1">
             <stop offset="5%" stopColor="#38bdf8" stopOpacity={0.45} />
@@ -28,12 +28,12 @@ export function UsageAreaChart() {
   )
 }
 
-export function ApplianceDonut() {
+export function ApplianceDonut({ data = applianceBreakdown }) {
   return (
     <ResponsiveContainer width="100%" height={260}>
       <PieChart>
-        <Pie data={applianceBreakdown} dataKey="value" innerRadius={72} outerRadius={104} paddingAngle={4}>
-          {applianceBreakdown.map((entry) => <Cell key={entry.name} fill={entry.color} />)}
+        <Pie data={data} dataKey="value" innerRadius={72} outerRadius={104} paddingAngle={4}>
+          {data.map((entry) => <Cell key={entry.name} fill={entry.color} />)}
         </Pie>
         <Tooltip contentStyle={tooltipStyle} />
       </PieChart>
@@ -41,10 +41,10 @@ export function ApplianceDonut() {
   )
 }
 
-export function PeakBarChart() {
+export function PeakBarChart({ data = hourlyUsage }) {
   return (
     <ResponsiveContainer width="100%" height={220}>
-      <BarChart data={hourlyUsage}>
+      <BarChart data={data}>
         <XAxis dataKey="time" stroke="#64748b" tickLine={false} axisLine={false} />
         <Tooltip contentStyle={tooltipStyle} />
         <Bar dataKey="kwh" radius={[10, 10, 0, 0]} fill="#22d3ee" />

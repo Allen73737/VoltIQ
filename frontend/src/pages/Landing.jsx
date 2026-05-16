@@ -52,7 +52,7 @@ function HeroPreview() {
           <div className="mt-5 grid gap-3 sm:grid-cols-3">
             {[
               [Gauge, '91', 'efficiency'],
-              [BadgeIndianRupee, '₹7.8k', 'forecast'],
+              [BadgeIndianRupee, 'Rs 7.8k', 'forecast'],
               [Activity, '6-9 PM', 'peak'],
             ].map(([Icon, value, label]) => (
               <div key={label} className="rounded-2xl border border-white/10 bg-white/[0.06] p-4">
@@ -125,21 +125,21 @@ export default function Landing() {
                 Smart electricity monitoring for buildings that need decisions, not spreadsheets.
               </motion.p>
               <motion.p variants={fade} custom={3} className="mt-5 max-w-2xl text-lg leading-8 text-slate-400">
-                Track appliances by session, predict bills, detect peak demand, and generate board-ready insights for apartments, hostels, offices, and homes.
+                Track appliance sessions, calculate real kWh, forecast bills, and turn building energy operations into a measurable workflow.
               </motion.p>
               <motion.div variants={fade} custom={4} className="mt-9 flex flex-wrap gap-4">
                 <button type="button" onClick={goRegister} className="group flex cursor-pointer items-center gap-2 rounded-full bg-sky-300 px-6 py-3 font-semibold text-slate-950 shadow-[0_0_48px_rgba(56,189,248,.42)] transition hover:-translate-y-0.5 hover:bg-cyan-200">
-                  Start monitoring <ArrowRight size={18} className="transition group-hover:translate-x-1" />
+                  Create real workspace <ArrowRight size={18} className="transition group-hover:translate-x-1" />
                 </button>
                 <button type="button" onClick={goDemo} className="flex cursor-pointer items-center gap-2 rounded-full border border-white/15 px-6 py-3 font-medium text-slate-200 transition hover:-translate-y-0.5 hover:bg-white/10">
-                  <Play size={17} fill="currentColor" /> View demo
+                  <Play size={17} fill="currentColor" /> View demo campus
                 </button>
               </motion.div>
               <motion.div variants={fade} custom={5} className="mt-10 grid max-w-xl grid-cols-3 gap-3">
                 {[
-                  ['42%', 'peak load clarity'],
-                  ['24/7', 'live telemetry'],
-                  ['JWT', 'secure access'],
+                  ['Real', 'session-based kWh'],
+                  ['Clean', 'tenant workspace'],
+                  ['Secure', 'JWT access'],
                 ].map(([value, label]) => (
                   <div key={label} className="rounded-2xl border border-white/10 bg-white/[0.05] p-4">
                     <p className="text-2xl font-semibold text-sky-100">{value}</p>
@@ -160,7 +160,7 @@ export default function Landing() {
             <p className="text-sm uppercase tracking-[0.35em] text-sky-200/70">Platform modules</p>
             <h2 className="mt-3 text-4xl font-semibold tracking-tight md:text-5xl">Built like a real SaaS product.</h2>
           </div>
-          <p className="max-w-md text-slate-400">Operations teams get fast controls, finance gets forecasts, and residents get quieter energy behavior.</p>
+          <p className="max-w-md text-slate-400">New workspaces start clean. The demo campus shows sample analytics instantly; production accounts build insight from recorded appliance sessions.</p>
         </div>
         <div className="grid gap-4 md:grid-cols-3">
         {[
