@@ -16,4 +16,4 @@ services:
       - key: ENERGY_TARIFF_PER_KWH
         value: 9.35
       - key: CORS_ALLOWED_ORIGINS
-        sync: false
+        value: http://localhost:5173,https://volt-iq-three.vercel.app
