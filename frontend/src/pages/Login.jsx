@@ -27,7 +27,7 @@ export default function Login() {
   }
 
   return (
-    <main className="grid min-h-screen place-items-center bg-[#02040a] px-5 text-white">
+    <main className="grid min-h-screen place-items-center bg-[#02040a] px-5 py-24 text-white">
       <form onSubmit={submit} className="glass w-full max-w-md rounded-[32px] p-8">
         <motion.div initial={{ scale: 0.92, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="mx-auto grid size-14 place-items-center rounded-2xl bg-sky-300 text-slate-950">
           <Bolt fill="currentColor" />

@@ -12,6 +12,7 @@ import Settings from './pages/Settings.jsx'
 import DemoRedirect from './pages/DemoRedirect.jsx'
 import AppShell from './components/AppShell.jsx'
 import BootLoader from './components/BootLoader.jsx'
+import QuickNav from './components/QuickNav.jsx'
 
 const Protected = ({ children }) => {
   const { token } = useAuth()
@@ -21,6 +22,7 @@ const Protected = ({ children }) => {
 export default function App() {
   const location = useLocation()
   const [booting, setBooting] = useState(true)
+  const showQuickNav = location.pathname !== '/'
 
   useEffect(() => {
     const timer = window.setTimeout(() => setBooting(false), 1500)
@@ -30,6 +32,7 @@ export default function App() {
   return (
     <>
       <BootLoader done={!booting} />
+      {showQuickNav && <QuickNav />}
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<Landing />} />

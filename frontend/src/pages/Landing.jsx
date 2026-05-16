@@ -88,11 +88,14 @@ export default function Landing() {
 
   return (
     <main className="overflow-hidden bg-[#02040a] text-white">
-      <nav className="fixed left-0 right-0 top-0 z-40 border-b border-white/10 bg-[#02040a]/70 backdrop-blur-2xl">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4">
+      <nav className="fixed left-0 right-0 top-0 z-40 px-3 pt-3">
+        <div className="mx-auto flex max-w-7xl items-center justify-between rounded-[28px] border border-white/10 bg-slate-950/72 px-5 py-3 shadow-[0_24px_80px_rgba(0,0,0,.34)] backdrop-blur-2xl">
           <Link to="/" className="flex items-center gap-3 text-lg font-semibold">
-            <span className="grid size-10 place-items-center rounded-2xl bg-sky-400 text-slate-950 shadow-[0_0_36px_rgba(56,189,248,.55)]"><Bolt fill="currentColor" /></span>
-            VoltIQ
+            <span className="grid size-11 place-items-center rounded-[18px] bg-sky-300 text-slate-950 shadow-[0_0_42px_rgba(56,189,248,.6)]"><Bolt fill="currentColor" /></span>
+            <span>
+              <span className="block leading-none">VoltIQ</span>
+              <span className="text-[10px] uppercase tracking-[0.32em] text-sky-100/60">Grid Atelier</span>
+            </span>
           </Link>
           <div className="hidden items-center gap-8 text-sm text-slate-300 md:flex">
             <a href="#features">Features</a>
@@ -101,28 +104,28 @@ export default function Landing() {
           </div>
           <div className="flex items-center gap-3">
             <button type="button" onClick={goDemo} className="hidden cursor-pointer rounded-full border border-white/10 bg-white/10 px-5 py-2 text-sm hover:bg-white/15 sm:block">View demo</button>
-            <Link to="/login" className="rounded-full bg-sky-300 px-5 py-2 text-sm font-semibold text-slate-950 shadow-[0_0_30px_rgba(56,189,248,.35)]">Launch app</Link>
+            <Link to="/login" className="luxury-sheen rounded-full bg-sky-300 px-5 py-2 text-sm font-semibold text-slate-950 shadow-[0_0_30px_rgba(56,189,248,.35)]">Launch app</Link>
           </div>
         </div>
       </nav>
 
-      <section className="relative min-h-screen px-5 pb-24 pt-32">
+      <section className="relative min-h-screen px-5 pb-24 pt-36">
         <div className="pointer-events-none absolute inset-0 grid-glow" />
-        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(115deg,transparent_0%,rgba(14,165,233,.12)_36%,transparent_62%),linear-gradient(28deg,rgba(45,212,191,.08),transparent_42%)]" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_52%_22%,rgba(125,211,252,.18),transparent_26rem),linear-gradient(115deg,transparent_0%,rgba(14,165,233,.12)_36%,transparent_62%),linear-gradient(28deg,rgba(45,212,191,.08),transparent_42%)]" />
         <div className="pointer-events-none absolute inset-0">
           <Particles />
         </div>
         <motion.div className="relative z-10 mx-auto max-w-7xl" initial="hidden" animate="show">
           <div className="grid items-center gap-14 lg:grid-cols-[1fr_.95fr]">
             <div>
-              <motion.p variants={fade} className="inline-flex items-center gap-2 rounded-full border border-sky-300/20 bg-sky-300/10 px-4 py-2 text-sm text-sky-100">
-                <Sparkles size={16} /> Enterprise energy intelligence suite
+              <motion.p variants={fade} className="inline-flex items-center gap-2 rounded-full border border-sky-300/20 bg-sky-300/10 px-4 py-2 text-sm text-sky-100 shadow-[0_0_40px_rgba(56,189,248,.18)]">
+                <Sparkles size={16} /> Private energy intelligence for modern spaces
               </motion.p>
               <motion.h1 variants={fade} custom={1} className="mt-7 max-w-4xl text-5xl font-semibold tracking-tight text-white md:text-7xl lg:text-8xl">
                 VoltIQ
               </motion.h1>
               <motion.p variants={fade} custom={2} className="mt-5 max-w-3xl text-2xl font-medium leading-10 text-slate-100 md:text-3xl">
-                Smart electricity monitoring for buildings that need decisions, not spreadsheets.
+                A luxury-grade command center for electricity, appliances, costs, and operational clarity.
               </motion.p>
               <motion.p variants={fade} custom={3} className="mt-5 max-w-2xl text-lg leading-8 text-slate-400">
                 Track appliance sessions, calculate real kWh, forecast bills, and turn building energy operations into a measurable workflow.
@@ -146,6 +149,11 @@ export default function Landing() {
                     <p className="mt-1 text-xs leading-5 text-slate-500">{label}</p>
                   </div>
                 ))}
+              </motion.div>
+              <motion.div variants={fade} custom={6} className="mt-8 flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.28em] text-slate-500">
+                <span className="rounded-full border border-white/10 bg-white/[0.04] px-4 py-2">PostgreSQL</span>
+                <span className="rounded-full border border-white/10 bg-white/[0.04] px-4 py-2">Spring Boot</span>
+                <span className="rounded-full border border-white/10 bg-white/[0.04] px-4 py-2">Vercel + Render</span>
               </motion.div>
             </div>
 
@@ -216,6 +224,16 @@ export default function Landing() {
       </section>
 
       <section id="trust" className="mx-auto max-w-7xl px-5 py-24">
+        <div className="mb-10 rounded-[34px] border border-white/10 bg-[linear-gradient(135deg,rgba(56,189,248,.14),rgba(255,255,255,.04),rgba(45,212,191,.1))] p-6 shadow-[0_26px_90px_rgba(0,0,0,.28)]">
+          <div className="grid gap-5 md:grid-cols-3">
+            {['Board-ready reporting', 'Tenant-safe access', 'Appliance-level clarity'].map((item) => (
+              <div key={item} className="rounded-[24px] border border-white/10 bg-slate-950/45 p-5">
+                <p className="text-sm uppercase tracking-[0.28em] text-sky-100/60">VoltIQ standard</p>
+                <p className="mt-3 text-xl font-semibold">{item}</p>
+              </div>
+            ))}
+          </div>
+        </div>
         <div className="grid gap-5 md:grid-cols-2">
           {['The first dashboard our facilities team checks every morning.', 'VoltIQ made appliance-level accountability feel effortless.'].map((quote, i) => (
             <motion.blockquote key={quote} initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="glass rounded-[28px] p-8">
@@ -227,8 +245,23 @@ export default function Landing() {
         </div>
       </section>
 
-      <footer className="border-t border-white/10 px-5 py-10 text-center text-sm text-slate-500">
-        VoltIQ Smart Energy Consumption Analytics Platform
+      <footer className="border-t border-white/10 bg-slate-950/70 px-5 py-12">
+        <div className="mx-auto grid max-w-7xl gap-8 md:grid-cols-[1fr_auto] md:items-center">
+          <div>
+            <div className="flex items-center gap-3">
+              <span className="grid size-11 place-items-center rounded-[18px] bg-sky-300 text-slate-950 shadow-[0_0_36px_rgba(56,189,248,.45)]"><Bolt fill="currentColor" /></span>
+              <div>
+                <p className="text-lg font-semibold text-slate-100">VoltIQ</p>
+                <p className="text-xs uppercase tracking-[0.32em] text-slate-500">Smart Energy Consumption Analytics Platform</p>
+              </div>
+            </div>
+            <p className="mt-5 max-w-xl leading-7 text-slate-500">A polished command surface for real appliance sessions, consumption intelligence, billing visibility, and premium energy operations.</p>
+          </div>
+          <div className="flex flex-wrap gap-3 text-sm">
+            <Link to="/demo" className="rounded-full border border-white/10 bg-white/[0.06] px-5 py-3 text-slate-300 hover:bg-white/10">View demo</Link>
+            <Link to="/register" className="rounded-full bg-sky-300 px-5 py-3 font-semibold text-slate-950">Create workspace</Link>
+          </div>
+        </div>
       </footer>
     </main>
   )

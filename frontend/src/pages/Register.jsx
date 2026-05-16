@@ -21,7 +21,7 @@ export default function Register() {
   }
 
   return (
-    <main className="grid min-h-screen place-items-center bg-[#02040a] px-5 text-white">
+    <main className="grid min-h-screen place-items-center bg-[#02040a] px-5 py-24 text-white">
       <form onSubmit={submit} className="glass w-full max-w-lg rounded-[32px] p-8">
         <h1 className="text-3xl font-semibold">Create your energy workspace</h1>
         <p className="mt-2 text-slate-400">Start with a clean tenant and add your real appliances.</p>

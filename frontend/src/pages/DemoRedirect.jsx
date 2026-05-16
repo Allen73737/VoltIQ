@@ -21,7 +21,7 @@ export default function DemoRedirect() {
   }, [login, navigate, startDemo])
 
   return (
-    <main className="grid min-h-screen place-items-center bg-[#02040a] px-5 text-white">
+    <main className="grid min-h-screen place-items-center bg-[#02040a] px-5 py-24 text-white">
       <motion.div
         initial={{ opacity: 0, scale: 0.94 }}
         animate={{ opacity: 1, scale: 1 }}
