@@ -10,11 +10,19 @@ export default function DemoRedirect() {
 
   useEffect(() => {
     let mounted = true
-    login('admin@voltiq.io', 'password123', { demo: true })
-      .catch(startDemo)
-      .finally(() => {
+    const attempt = async () => {
+      try {
+        await Promise.race([
+          login('admin@voltiq.io', 'password123', { demo: true }),
+          new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 1200))
+        ])
+      } catch {
+        startDemo()
+      } finally {
         if (mounted) navigate('/app', { replace: true })
-      })
+      }
+    }
+    attempt()
     return () => {
       mounted = false
     }
